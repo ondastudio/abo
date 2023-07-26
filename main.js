@@ -36,10 +36,12 @@ $(".letters-up").each(function () {
 $(".hero-oppacity").css("opacity", "0");
 $(".hero-opacity-animation").css("opacity", "0");
 
+let typeSplit;
+
 $(document).ready(function () {
   //window.addEventListener("DOMContentLoaded", (event) => {
   // Split text into spans
-  let typeSplit = new SplitType("[text-split]");
+  typeSplit = new SplitType("[text-split]");
 
   //runs gsap at the beggining if we're not at home
   if ($(".section_hero-other-pages").length) {
@@ -99,7 +101,7 @@ $(document).ready(function () {
 
       $(".hero-oppacity").css("opacity", "1");
       $(".hero-opacity-animation").css("opacity", "1");
-    }, "4500");
+    }, "2500");
   }
 
   //â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
@@ -234,7 +236,33 @@ $(".load-more-btn_wrapper").on("click", function () {
         $(this).find(".button-ellipse").css("background-color", "transparent");
       }
     );
-  }, "500");
+  }, "200");
+});
+
+//enable read more button transition when click on category
+$(".category-item").on("click", function () {
+  setTimeout(() => {
+    //Read more Button
+
+    $(".read-more-trigger").hover(
+      function () {
+        $(this).find(".button-ellipse").addClass("is-active");
+        $(this).find(".is-ellipse").addClass("is-active");
+
+        var btn_bordercolor = $(this)
+          .find(".button-ellipse")
+          .css("border-color");
+        $(this)
+          .find(".button-ellipse")
+          .css("background-color", btn_bordercolor);
+      },
+      function () {
+        $(this).find(".button-ellipse").removeClass("is-active");
+        $(this).find(".is-ellipse").removeClass("is-active");
+        $(this).find(".button-ellipse").css("background-color", "transparent");
+      }
+    );
+  }, "200");
 });
 
 //Emulate click to close contact form when clicking outside
@@ -305,8 +333,22 @@ if ($(".section_hero-other-pages").length) {
         box.parentNode = document
           .querySelector(".newcontainer")
           .appendChild(box);
-        Flip.from(state, { duration: 1, ease: "Power4.easeInOut" });
-      }, "1300");
+        Flip.from(state, {
+          duration: 1.5,
+          ease: "Expo.easeInOut",
+          onComplete: () => {
+            const styles = `
+              html.lenis { 
+                height: auto;
+              }
+            `;
+
+            const styleSheet = document.createElement("style");
+            styleSheet.innerText = styles;
+            document.head.appendChild(styleSheet);
+          }
+        });
+      }, "1000");
 
       setTimeout(() => {
         function createScrollTrigger(triggerElement, timeline, delay) {
@@ -351,26 +393,29 @@ if ($(".section_hero-other-pages").length) {
             yPercent: 200,
             rotation: 10,
             duration: 1.7,
-            ease: "power2.out",
+            ease: "power3.out",
             stagger: { amount: 0.2 }
           });
           createScrollTrigger($(this), tl);
         });
 
-        $(".hero-anim-text-wrapper").css("opacity", "1");
-        $(".hero-anim-text-anim-wrapper").css("opacity", "1");
-      }, "2400");
+        setTimeout(() => {
+          $(".hero-anim-text-wrapper").css("opacity", "1");
+          $(".hero-anim-text-anim-wrapper").css("opacity", "1");
+        }, 400);
+      }, 1500);
     }
   }
 }
 
-initLenis();
+let lenis;
+//initLenis();
 
 function initLenis() {
   "use strict"; // fix lenis in safari
 
   if (Webflow.env("editor") === undefined) {
-    const lenis = new Lenis({
+    lenis = new Lenis({
       lerp: 0.1,
       wheelMultiplier: 0.7,
       infinite: false,
@@ -462,3 +507,7 @@ function run_gsap() {
 
   gsap.set("[text-split]", { opacity: 1 });
 }
+
+window.addEventListener("resize", () => {
+  typeSplit.revert();
+});
