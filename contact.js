@@ -1,4 +1,3 @@
-const contactModal = document.querySelector(".section_contact");
 let refresh = false;
 
 /**
@@ -32,8 +31,10 @@ Observe(
   }
 );
 
+let href;
 // Modal opens.
 function onModalShow() {
+  href = window.location.href;
   window.history.pushState({}, "", "/#contact");
 }
 
@@ -41,7 +42,7 @@ function onModalShow() {
 function onModalHide() {
   // If refreshed with the /#contact url, change url to Homepage
   if (refresh) window.history.pushState({}, "", "/");
-  else window.history.back();
+  else window.history.pushState({}, href, href);
 }
 
 // If refresh with the /#contact url
