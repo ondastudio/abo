@@ -44,7 +44,6 @@ $(document).ready(function () {
 
   //runs gsap at the beggining if we're not at home
   if ($(".section_hero-other-pages").length) {
-    //console.log("here nowwww");
   } else if ($(".section_hero-news").length) {
     //is news page
     run_gsap();
@@ -124,7 +123,6 @@ $(".filter_radio").on("click", function () {
   if (close_click) {
     setTimeout(() => {
       var currentResults = $(".original-number-of-results").text();
-      //console.log(currentResults);
       $(".number-of-results").text("(" + currentResults + ")");
       $(this).siblings(".number-of-results").css("opacity", "1");
     }, "300");
@@ -334,7 +332,7 @@ if ($(".section_hero-other-pages").length) {
         setTimeout(() => {
           $(".hero-anim-text-wrapper").css("opacity", "1");
           $(".hero-anim-text-anim-wrapper").css("opacity", "1");
-        }, 800);
+        }, 1100);
       }, 1500);
 
       setTimeout(() => {
