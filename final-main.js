@@ -10,6 +10,7 @@ $(".heading-style-h2").each(function () {
   $(this).attr("text-split", "");
   $(this).attr("letters-slide-up", "");
 });
+console.log("cenas");
 
 //remove attributes from the homepage - stats section
 $(".grow-grid_wrapper").find(".heading-style-h1").removeAttr("text-split");
