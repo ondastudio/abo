@@ -44,7 +44,7 @@ $(document).ready(function () {
 
   //runs gsap at the beggining if we're not at home
   if ($(".section_hero-other-pages").length) {
-  } else if ($(".section_hero-news").length) {
+  } else if ($(".section_hero-news").length || $(".section_hero-404").length) {
     //is news page
     run_gsap();
   } else {
